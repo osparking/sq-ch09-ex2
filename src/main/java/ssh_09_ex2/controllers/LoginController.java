@@ -6,9 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import space.jbpark.utility.MyUtil;
+
 @Controller
 public class LoginController {
+	private LoginProcessor loginProcessor;
 	
+	public LoginController(LoginProcessor loginProcessor) {
+		super();
+		this.loginProcessor = loginProcessor;
+		MyUtil.getPrintStream().println("로그인 제어기 생성");
+	}
+
 	@GetMapping("/")
 	public String login(Model model) {
 		model.addAttribute("loginResult", null);
@@ -20,8 +29,9 @@ public class LoginController {
 			@RequestParam String username, 
 			@RequestParam String password, 
 			Model model) {
-		if ("natalie".equals(username) &&
-				"1234".equals(password)) {
+		loginProcessor.setUsername(username);
+		loginProcessor.setPassword(password);
+		if (loginProcessor.validCredentials()) {
 			String msg = username + "님";
 			model.addAttribute("loginResult", msg);
 			return "main.html";
