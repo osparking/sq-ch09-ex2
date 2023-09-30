@@ -34,10 +34,11 @@ public class LoginController {
 		if (loginProcessor.validCredentials()) {
 			String msg = username + "님";
 			model.addAttribute("loginResult", msg);
-			return "main.html";
+			
+			return "redirect:/main";
 		} else {
 			model.addAttribute("loginResult", "로그인에 실패했습니다");
-			return "login.html";
+			return "redirect:/";
 		}
 	}
 	
