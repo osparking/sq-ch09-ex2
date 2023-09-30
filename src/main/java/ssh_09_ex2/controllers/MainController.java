@@ -21,8 +21,10 @@ public class MainController {
 		String username = loginService.getUsername();
 		
 		if (logout != null) {
+			reAttrs.addFlashAttribute("message", username + "님 안녕히 가세요 :-)");
 			loginService.setUsername(null);
-		}
+			return "redirect:/";
+		} 
 		
 		if (username == null) {
 			reAttrs.addFlashAttribute("message", "/main 방문은 로그인이 필요합니다");
